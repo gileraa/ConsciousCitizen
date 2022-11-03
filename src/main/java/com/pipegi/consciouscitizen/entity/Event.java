@@ -34,8 +34,7 @@ public class Event {
     @Column(name = "theme", nullable = false, length = 100)
     protected String theme;
 
-    @Lob
-    @Column(name = "message_text", nullable = false)
+    @Column(name = "message_text", nullable = false, length = 1000)
     protected String messageText;
 
     @Column(name = "date", nullable = false)
@@ -43,6 +42,5 @@ public class Event {
 
     @Column(name = "result", nullable = false)
     protected boolean result;
-
 
 }
