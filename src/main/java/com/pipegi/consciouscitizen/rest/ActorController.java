@@ -5,6 +5,8 @@ import com.pipegi.consciouscitizen.service.ActorService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+
 @RestController
 public class ActorController {
 
@@ -24,5 +26,10 @@ public class ActorController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody Actor save(@RequestBody Actor actor) {
         return this.service.save(actor);
+    }
+
+    @GetMapping(path = "/actors", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Collection<Actor> getAll() {
+        return this.service.getAll();
     }
 }
