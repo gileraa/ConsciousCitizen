@@ -12,6 +12,19 @@ import { MessangerComponent } from './messanger/messanger.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NewMessageComponent } from './messanger/new-message/new-message.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import {
+  MatFormFieldModule,
+  MAT_FORM_FIELD_DEFAULT_OPTIONS,
+} from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { CreatedMessageComponent } from './messanger/created-message/created-message.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -31,8 +44,22 @@ const appRoutes: Routes = [
     MessangerComponent,
     ProfileComponent,
     HomeComponent,
+    NewMessageComponent,
+    CreatedMessageComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    NoopAnimationsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatCardModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
