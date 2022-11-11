@@ -1,0 +1,45 @@
+:host {
+    height: 80vh;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.form {
+    flex-flow: column;
+    display: flex;
+    width: 50%;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    margin: 80px;
+}
+
+.info {
+    width: 400px;
+    margin: 0px 0px 20px;
+}
+
+.textarea {
+    resize: none;
+    height: 300px;
+}
+
+.button {
+    color: #3F51B5;
+    border: 1px solid #3F51B5;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 80px;
+}
+
+::ng-deep .mat-form-field-flex {
+    border: 1px solid black;
+    background: white !important;
+}
