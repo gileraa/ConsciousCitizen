@@ -5,6 +5,7 @@ import com.pipegi.consciouscitizen.service.EventService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.util.Collection;
 
 @RestController
@@ -24,7 +25,7 @@ public class EventController {
     @PostMapping(path = "/saveEvent",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody Event save(@RequestBody Event event) {
+    public @ResponseBody Event save(@RequestBody Event event) throws FileNotFoundException {
         return this.service.save(event);
     }
 
