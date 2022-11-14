@@ -43,4 +43,10 @@ public class Event {
     @Column(name = "result", nullable = false)
     protected boolean result;
 
+    @Column(name = "image_name")
+    protected String image;
+
+    @Column(name = "image_name2")
+    protected String image2;
+
 }
