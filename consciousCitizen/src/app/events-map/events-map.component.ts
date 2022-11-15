@@ -76,6 +76,17 @@ export class EventsMapComponent implements OnInit, OnDestroy {
       });
   }
 
+  public getTypeTranslation(type: EEventTypeOptions): string {
+    switch (type) {
+      case EEventTypeOptions.OutdatedProduct:
+        return 'Просроченные продукты';
+      case EEventTypeOptions.Parking:
+        return 'Парковка';
+      default:
+        return 'Неизвестная рубрика';
+    }
+  }
+
   private initMap(): void {
     this.map = leaflet.map('map').setView([10, 10], 13);
     leaflet
