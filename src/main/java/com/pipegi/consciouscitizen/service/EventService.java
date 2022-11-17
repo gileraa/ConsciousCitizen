@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EventService {
@@ -42,6 +43,13 @@ public class EventService {
         List<Event> all = this.repository.findAll();
         all.forEach(this::loadImages);
         return all;
+    }
+
+    public Collection<Event> getByActorId(String actorId) {
+        int intId = Integer.parseInt(actorId);
+        return this.repository.findAll().stream()
+                .filter(event -> event.getActor().getId() == intId)
+                .collect(Collectors.toSet());
     }
 
     protected void saveImages(Event event) throws FileNotFoundException {
