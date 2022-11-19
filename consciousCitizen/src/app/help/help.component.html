@@ -1,1 +1,17 @@
-<p>help works!</p>
+<div class="form">
+  <span class="title">ОБРАТНАЯ СВЯЗЬ</span>
+  <span class="info">
+    Задайте свой вопрос или опишите проблему в поле ниже. Администратор ответит
+    в течение трёх дней.
+  </span>
+  <mat-form-field class="textarea-field" appearance="fill">
+    <mat-label>Опишите подробно вашу проблему</mat-label>
+    <textarea [formControl]="inputControl" matInput class="textarea"></textarea>
+  </mat-form-field>
+
+  <div class="button-container">
+    <button class="button" mat-stroked-button color="primary" (click)="send()">
+      Отправить
+    </button>
+  </div>
+</div>
