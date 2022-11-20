@@ -12,12 +12,19 @@ import { MessangerComponent } from './messanger/messanger.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EventsMapComponent } from './events-map/events-map.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NewMessageComponent } from './messanger/new-message/new-message.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
+import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import {
   MatFormFieldModule,
@@ -44,6 +51,7 @@ const appRoutes: Routes = [
     MessangerComponent,
     ProfileComponent,
     HomeComponent,
+    EventsMapComponent,
     NewMessageComponent,
     CreatedMessageComponent,
   ],
@@ -51,13 +59,19 @@ const appRoutes: Routes = [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    MatSidenavModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatSelectModule,
     NoopAnimationsModule,
     MatFormFieldModule,
-    MatSelectModule,
+    MatCardModule,
+    MatButtonModule,
+    MatSnackBarModule,
+    HttpClientModule,
     MatInputModule,
     BrowserAnimationsModule,
     MatToolbarModule,
-    MatButtonModule,
     MatCardModule,
   ],
   providers: [],

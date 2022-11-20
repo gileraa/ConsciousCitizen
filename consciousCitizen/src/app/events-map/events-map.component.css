@@ -1,0 +1,83 @@
+:host {
+    --margin: 20px;
+    --color: #DFD9E8;
+    --border-radius: 5px;
+}
+
+.info {
+    flex: 7%;
+    background: #EDE7F6;
+}
+
+.card-title {
+    margin-top: 10px;
+}
+
+.card-address {
+    margin: 10px 10px 10px 16px;
+}
+
+.card-date {
+    margin: 0px 10px 10px 16px;
+    padding-bottom: 10px;
+}
+
+.title {
+    margin: var(--margin);
+}
+
+.event-select {
+    border-radius: var(--border-radius);
+    margin: var(--margin);
+    width: 90%;
+    margin-bottom: 0px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    left: 3%;
+}
+
+.mat-card {
+    padding: 0px;
+    margin: var(--margin);
+    margin-bottom: 0px;
+}
+
+.card-header {
+    background-color: var(--color);
+}
+
+.card-content {
+    margin: var(--margin);
+    max-height: 110px;
+    overflow: auto;
+}
+
+.button {
+    margin: var(--margin);
+    border: 1px solid #3F51B5;
+    color: #3F51B5;
+}
+
+.card-image {
+    width: 100%;
+}
+
+.map-container {
+    flex: 70%;
+}
+
+.map {
+    height: 90vh;
+}
+
+::ng-deep .event-select .mat-form-field-flex {
+    background-color: var(--color);
+}
+
+
+

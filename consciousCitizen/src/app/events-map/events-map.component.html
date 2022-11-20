@@ -1,0 +1,52 @@
+<div class="info">
+  <h1 class="title">РУБРИКА</h1>
+
+  <mat-form-field class="event-select" appearance="fill">
+    <mat-select [formControl]="eventType" disableRipple>
+      <mat-option
+        *ngFor="let option of eventTypes | keyvalue"
+        [value]="option.key"
+      >
+        {{ option.value }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-card *ngIf="selectedEvent" class="card">
+    <mat-card-header class="card-header">
+      <mat-card-title class="card-title">
+        {{ selectedEvent.name }}
+      </mat-card-title>
+      <mat-card-subtitle class="card-title">
+        {{ getTypeTranslation(selectedEvent.type) }}
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="card-content">
+      <p>
+        {{ selectedEvent.description }}
+      </p>
+    </mat-card-content>
+    <img class="card-image" [src]="selectedEvent.imageBase64" />
+
+    <div class="card-address">
+      {{ selectedEvent.address }}
+    </div>
+    <div class="card-date">
+      {{ selectedEvent.date }}
+    </div>
+  </mat-card>
+
+  <div *ngIf="!selectedEvent" class="card">
+    <span class="card-content">Выберите событие</span>
+  </div>
+
+  <div class="button-container">
+    <button class="button" mat-stroked-button color="primary">
+      Создать сообщение
+    </button>
+  </div>
+</div>
+
+<div class="map-container">
+  <div id="map" class="map"></div>
+</div>

@@ -4,6 +4,8 @@ import com.pipegi.consciouscitizen.entity.Actor;
 import com.pipegi.consciouscitizen.repository.ActorRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+
 @Service
 public class ActorService {
 
@@ -22,5 +24,9 @@ public class ActorService {
 
     public Actor save(Actor actor) {
         return this.repository.save(actor);
+    }
+
+    public Collection<Actor> getAll() {
+        return this.repository.findAll();
     }
 }
