@@ -28,7 +28,7 @@ public class Institution {
     protected String description;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "rubric_id", unique = true)
+    @JoinColumn(name = "rubric_id")
     protected Rubric rubric;
 
 }

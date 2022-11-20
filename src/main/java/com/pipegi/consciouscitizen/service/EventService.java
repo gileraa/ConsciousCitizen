@@ -1,7 +1,11 @@
 package com.pipegi.consciouscitizen.service;
 
+import com.pipegi.consciouscitizen.entity.Actor;
 import com.pipegi.consciouscitizen.entity.Event;
+import com.pipegi.consciouscitizen.entity.Rubric;
+import com.pipegi.consciouscitizen.repository.ActorRepository;
 import com.pipegi.consciouscitizen.repository.EventRepository;
+import com.pipegi.consciouscitizen.repository.RubricRepository;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
@@ -20,9 +24,15 @@ public class EventService {
     protected final static String FORMAT_ERROR_MESSAGE = "No such 'Service' with id '%d'";
 
     protected final EventRepository repository;
+    protected final ActorRepository actorRepository;
+    protected final RubricRepository rubricRepository;
 
-    public EventService(EventRepository repository) {
+    public EventService(EventRepository repository,
+                        ActorRepository actorRepository,
+                        RubricRepository rubricRepository) {
         this.repository = repository;
+        this.actorRepository = actorRepository;
+        this.rubricRepository = rubricRepository;
     }
 
     public Event getById(Integer id) {
@@ -36,8 +46,26 @@ public class EventService {
 
     public Event save(Event event) throws FileNotFoundException {
         saveImages(event);
+
+        int actorId = event.getActor().getId();
+        event.setActor(loadActorById(actorId));
+
+        int rubricId = event.getRubric().getId();
+        event.setRubric(loadRubricById(rubricId));
+
         return this.repository.save(event);
     }
+
+    protected Actor loadActorById(int actorId) {
+        return this.actorRepository.findById(actorId)
+                .orElse(null);
+    }
+
+    protected Rubric loadRubricById(int rubricId) {
+        return this.rubricRepository.findById(rubricId)
+                .orElse(null);
+    }
+
 
     public Collection<Event> getAll() {
         List<Event> all = this.repository.findAll();

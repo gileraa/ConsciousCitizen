@@ -23,7 +23,4 @@ public class Rubric {
     @Column(name = "description", length = 150)
     protected String description;
 
-    @OneToMany(mappedBy = "rubric", cascade = CascadeType.ALL, orphanRemoval = true)
-    protected List<Institution> institutions;
-
 }
