@@ -17,20 +17,6 @@ import { User } from './user';
 export class ProfileComponent implements OnInit {
   public isEditingMode = false;
   user: User;
-  // private defaultPerson = {
-  //   firstName: 'Михаил',
-  //   lastName: 'Грушенков',
-  //   middleName: 'Андреевич',
-  //   email: 'grushenkov.m@gmail.com',
-  //   phone: '+79027426436',
-  //   city: 'Самара',
-  //   street: 'Московское шоссе',
-  //   house: '34Б',
-  //   apartment: '304',
-  //   login: '',
-  //   password: '',
-  //   newPassword: '',
-  // };
 
   public personForm: FormGroup;
 
@@ -41,9 +27,8 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.authService.login(1).subscribe();
+    this.authService.getUserById(1).subscribe();
     this.user = this.userService.getUserData();
-    console.log("user: ", this.user?.id);
     this.personForm = new FormGroup({
       firstName: new FormControl(
         { value: this.user?.firstName, disabled: !this.isEditingMode },
@@ -103,11 +88,9 @@ export class ProfileComponent implements OnInit {
   }
 
   public submitForm() {
-    this.userService.update(JSON.stringify(this.user)).subscribe(
-      () => {
-        this.authService.login(1).subscribe();
-      },
-    );
+    this.userService.update(JSON.stringify(this.user)).subscribe(() => {
+      this.authService.getUserById(1).subscribe();
+    });
     this.updateUserData();
     this.modeChanged();
   }
@@ -115,8 +98,7 @@ export class ProfileComponent implements OnInit {
   updateUserData() {
     if (this.personForm.value['newPassword'] != null) {
       this.user.password = this.personForm.value['newPassword'];
-    }
-    else {
+    } else {
       this.user.password = this.personForm.value['password'];
     }
     this.user.firstName = this.personForm.value['firstName'];
@@ -129,6 +111,6 @@ export class ProfileComponent implements OnInit {
     this.user.apartment = this.personForm.value['apartment'];
     this.user.login = this.personForm.value['login'];
     this.user.status = false;
-    this.user.role = {id: 1, name: "Ivan"};
+    this.user.role = { id: 1, name: 'Ivan' };
   }
 }

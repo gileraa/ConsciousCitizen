@@ -18,25 +18,21 @@ export class AuthService {
   private readonly url = `${BASE_URL}/actor`;
 
   constructor(private http: HttpClient) {}
-  register(user: User): Observable<User> {
-    return this.http.post<User>('/api/customers/register', user);
-  }
+  // register(user: User): Observable<User> {
+  //   return this.http.post<User>('/api/customers/register', user);
+  // }
 
-  login(id: number): Observable<User> {
+  getUserById(id: number): Observable<string> {
     const headers = new HttpHeaders();
     headers.set('Authorization', `Basic ${TOKEN}`);
-    headers.append('Content-Type', 'application/json');
-    headers.append('Accept', 'application/json');
-    headers.append('Access-Control-Allow-Credentials', 'true');
     return this.http
-      .get<User>(`${this.url}/${id}`, { headers: headers })
+      .get<string>(`${this.url}/${id}`, { headers: headers })
       .pipe(
         tap((token) => {
-          console.log("user: ", token);
-          // localStorage.setItem('auth-token', token);
-          // const parsedToken = JSON.parse(token);
-          // this.setToken(parsedToken);
-          // this.userId = parsedToken.userId;
+          localStorage.setItem('auth-token', token);
+          const parsedToken = JSON.parse(token);
+          this.setToken(parsedToken);
+          this.userId = parsedToken.userId;
         })
       );
   }
