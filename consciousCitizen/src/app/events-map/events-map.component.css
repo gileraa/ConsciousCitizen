@@ -5,8 +5,9 @@
 }
 
 .info {
-    flex: 7%;
+    flex: 14%;
     background: #EDE7F6;
+    min-width: 400px;
 }
 
 .button-container {
@@ -21,6 +22,10 @@
     margin: var(--margin);
     border: 1px solid #3F51B5;
     color: #3F51B5;
+}
+
+.button.action {
+    margin-left: 0px;
 }
 
 .map-container {

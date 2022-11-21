@@ -24,6 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatTabsModule } from '@angular/material/tabs';
 import { EventTypeSelectorComponent } from './events-map/components/event-type-selector/event-type-selector.component';
 import { EventCardComponent } from './events-map/components/event-card/event-card.component';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -45,7 +46,7 @@ const appRoutes: Routes = [
     HomeComponent,
     EventsMapComponent,
     EventTypeSelectorComponent,
-    EventCardComponent
+    EventCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +61,7 @@ const appRoutes: Routes = [
     MatSnackBarModule,
     HttpClientModule,
     MatTabsModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

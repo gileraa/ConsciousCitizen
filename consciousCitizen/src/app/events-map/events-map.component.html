@@ -1,9 +1,19 @@
 <div class="info">
   <div *ngIf="isMessangerMode" class="messanger-buttons">
-    <button mat-flat-button class="left-button" [class.active]="activeTab === 'messages'" (click)="showMessages()">
+    <button
+      mat-flat-button
+      class="left-button"
+      [class.active]="activeTab === 'messages'"
+      (click)="showMessages()"
+    >
       Сообщения
     </button>
-    <button mat-flat-button class="right-button" [class.active]="activeTab === 'drafts'" (click)="showDrafts()">
+    <button
+      mat-flat-button
+      class="right-button"
+      [class.active]="activeTab === 'drafts'"
+      (click)="showDrafts()"
+    >
       Черновики
     </button>
   </div>
@@ -21,10 +31,33 @@
     <span class="choose-event">Выберите событие</span>
   </div>
 
-  <div class="button-container">
+  <div *ngIf="!isMessangerMode" class="button-container">
     <button class="button" mat-stroked-button color="primary">
       Создать сообщение
     </button>
+  </div>
+
+  <div *ngIf="isMessangerMode && selectedEvent" class="button-container">
+    <ng-container *ngIf="activeTab === 'messages'">
+      <button class="button" mat-stroked-button color="primary">
+        Архивировать
+      </button>
+      <button class="button action" mat-stroked-button color="primary">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </ng-container>
+
+    <ng-container *ngIf="activeTab === 'drafts'">
+      <button class="button" mat-stroked-button color="primary">
+        Опубликовать
+      </button>
+      <button class="button action" mat-stroked-button color="primary">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button class="button action" mat-stroked-button color="primary">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </ng-container>
   </div>
 </div>
 
