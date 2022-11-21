@@ -33,7 +33,7 @@ public class InstitutionController {
         return this.service.getAll();
     }
 
-    @GetMapping(path = "/saveInstitution/{rubricName}",
+    @GetMapping(path = "/institutionByRubricName/{rubricName}",
             consumes = MediaType.APPLICATION_JSON_VALUE)
     protected @ResponseBody Collection<Institution> getAllByRubricName(@PathVariable String rubricName) {
         return this.service.getAllByRubricName(rubricName);

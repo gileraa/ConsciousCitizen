@@ -33,4 +33,9 @@ public class EventController {
     public Collection<Event> getAll() {
         return this.service.getAll();
     }
+
+    @GetMapping(path = "/eventByActor/{actorId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Collection<Event> getByActorId(@PathVariable String actorId) {
+        return this.service.getByActorId(actorId);
+    }
 }

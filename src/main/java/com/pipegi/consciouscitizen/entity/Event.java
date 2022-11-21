@@ -16,7 +16,7 @@ public class Event {
     @Column(name = "id", nullable = false)
     protected int id;
 
-    @OneToOne(cascade = CascadeType.ALL, optional = false, orphanRemoval = true)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH}, optional = false)
     @JoinColumn(name = "actor_id", nullable = false)
     protected Actor actor;
 
