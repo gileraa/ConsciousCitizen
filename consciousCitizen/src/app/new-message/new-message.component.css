@@ -40,12 +40,19 @@
   width  : 45%;
 }
 
+.form-button-element {
+  display: flex;
+  justify-content: center;
+}
+
 .form-element-image {
   width: 100%;
 }
 
 .button {
-  width: 100%;
+  margin: var(--margin);
+  border: 1px solid #3F51B5;
+  color: #3F51B5;
 }
 
 #fileInput {
