@@ -109,7 +109,7 @@ public class EventService {
     @SneakyThrows
     protected void loadImages(Event event) {
         if (Strings.isNotBlank(event.getImage())) {
-            String image1FileName = Event.class.getSimpleName() + "_" + event.getId() + "_1";
+            String image1FileName = Event.class.getSimpleName() + "_" + event.getId() + "_1.txt";
 
             String content = new String(Files.readAllBytes(Paths.get(image1FileName)));
 
@@ -117,7 +117,7 @@ public class EventService {
         }
 
         if (Strings.isNotBlank(event.getImage2())) {
-            String image2FileName = Event.class.getSimpleName() + "_" + event.getId() + "_2";
+            String image2FileName = Event.class.getSimpleName() + "_" + event.getId() + "_2.txt";
 
             String content = new String(Files.readAllBytes(Paths.get(image2FileName)));
 
