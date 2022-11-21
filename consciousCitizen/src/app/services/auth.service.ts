@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { IActor } from '../events-map/interfaces/actor.interface';
 import { User } from '../profile/user';
 
 export const BASE_URL = 'http://localhost:8080';
@@ -22,17 +23,15 @@ export class AuthService {
   //   return this.http.post<User>('/api/customers/register', user);
   // }
 
-  getUserById(id: number): Observable<string> {
+  getUserById(id: number): Observable<IActor> {
     const headers = new HttpHeaders();
     headers.set('Authorization', `Basic ${TOKEN}`);
     return this.http
-      .get<string>(`${this.url}/${id}`, { headers: headers })
+      .get<IActor>(`${this.url}/${id}`, { headers: headers })
       .pipe(
         tap((token) => {
-          localStorage.setItem('auth-token', token);
-          const parsedToken = JSON.parse(token);
-          this.setToken(parsedToken);
-          this.userId = parsedToken.userId;
+          this.setToken(token);
+          this.userId = token.id;
         })
       );
   }
