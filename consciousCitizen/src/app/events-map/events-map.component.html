@@ -1,43 +1,24 @@
 <div class="info">
-  <h1 class="title">РУБРИКА</h1>
+  <div *ngIf="isMessangerMode" class="messanger-buttons">
+    <button mat-flat-button class="left-button" [class.active]="activeTab === 'messages'" (click)="showMessages()">
+      Сообщения
+    </button>
+    <button mat-flat-button class="right-button" [class.active]="activeTab === 'drafts'" (click)="showDrafts()">
+      Черновики
+    </button>
+  </div>
 
-  <mat-form-field class="event-select" appearance="fill">
-    <mat-select [formControl]="eventType" disableRipple>
-      <mat-option
-        *ngFor="let option of eventTypes | keyvalue"
-        [value]="option.key"
-      >
-        {{ option.value }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <app-event-type-selector
+    (eventTypeChanged)="changeEventType($event)"
+  ></app-event-type-selector>
 
-  <mat-card *ngIf="selectedEvent" class="card">
-    <mat-card-header class="card-header">
-      <mat-card-title class="card-title">
-        {{ selectedEvent.name }}
-      </mat-card-title>
-      <mat-card-subtitle class="card-title">
-        {{ getTypeTranslation(selectedEvent.type) }}
-      </mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content class="card-content">
-      <p>
-        {{ selectedEvent.description }}
-      </p>
-    </mat-card-content>
-    <img class="card-image" [src]="selectedEvent.imageBase64" />
+  <app-event-card
+    *ngIf="selectedEvent"
+    [event]="selectedEvent"
+  ></app-event-card>
 
-    <div class="card-address">
-      {{ selectedEvent.address }}
-    </div>
-    <div class="card-date">
-      {{ selectedEvent.date }}
-    </div>
-  </mat-card>
-
-  <div *ngIf="!selectedEvent" class="card">
-    <span class="card-content">Выберите событие</span>
+  <div *ngIf="!selectedEvent">
+    <span class="choose-event">Выберите событие</span>
   </div>
 
   <div class="button-container">
@@ -50,3 +31,5 @@
 <div class="map-container">
   <div id="map" class="map"></div>
 </div>
+
+<ng-template> 2-зч </ng-template>
