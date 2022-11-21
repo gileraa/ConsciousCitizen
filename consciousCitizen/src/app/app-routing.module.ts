@@ -4,6 +4,7 @@ import { AboutComponent } from './about/about.component';
 import { HelpComponent } from './help/help.component';
 import { HomeComponent } from './home/home.component';
 import { MessangerComponent } from './messanger/messanger.component';
+import { NewMessageComponent } from './new-message/new-message.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ProfileComponent } from './profile/profile.component';
 
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'messanger', component: MessangerComponent },
   { path: 'notifications', component: NotificationsComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'new-message', component: NewMessageComponent },
 ];
 
 @NgModule({

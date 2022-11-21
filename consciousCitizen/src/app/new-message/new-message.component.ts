@@ -5,23 +5,32 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Observable } from 'rxjs';
+
+const NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/search?";
+const params = {
+  q: "",
+  format: "json",
+  addressdetails: "addressdetails",
+};
 
 @Component({
   selector: 'app-new-message',
   templateUrl: './new-message.component.html',
   styleUrls: ['./new-message.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewMessageComponent implements OnInit {
-  toppingList: string[] = [
-    'Extra cheese',
-    'Mushroom',
-    'Onion',
-    'Pepperoni',
-    'Sausage',
-    'Tomato',
-  ];
+  // public readonly options: Record<EEventTypeOptions, string> = {
+  //   [EEventTypeOptions.All]: 'Все',
+  //   [EEventTypeOptions.Parking]: 'Парковки',
+  //   [EEventTypeOptions.OutdatedProduct]: 'Просроченные продукты',
+  // };
+  // public readonly options: Map<EEventTypeOptions, string> = new Map([
+  //   [EEventTypeOptions.All, 'Все'],
+  //   [EEventTypeOptions.Parking, 'Парковки'],
+  //   [EEventTypeOptions.OutdatedProduct, 'Просроченные продукты'],
+  // ]);
+  public options = ["Все", "Парковки", "Просроченные продукты"];
   formGroup: FormGroup;
   selectedFiles?: FileList;
   selectedFileNames: string[] = [];
@@ -36,8 +45,8 @@ export class NewMessageComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
+    console.log('new');
     this.createForm();
-    this.setChangeValidate();
   }
 
   selectFiles(event: any): void {
@@ -66,28 +75,12 @@ export class NewMessageComponent implements OnInit {
 
   createForm() {
     this.formGroup = this.formBuilder.group({
-      name: ["", Validators.required],
-      categories: [null, Validators.required],
-      description: [
-        ""
-      ],
-      address: ["", Validators.required],
+      name: ['', Validators.required],
+      categories: [this.options, Validators.required],
+      description: [''],
+      address: ['', Validators.required],
       image: [null],
       validate: '',
-    });
-  }
-
-  setChangeValidate() {
-    this.formGroup.get('validate').valueChanges.subscribe((validate) => {
-      if (validate == '1') {
-        this.formGroup
-          .get('name')
-          .setValidators([Validators.required, Validators.minLength(3)]);
-        this.titleAlert = 'You need to specify at least 3 characters';
-      } else {
-        this.formGroup.get('name').setValidators(Validators.required);
-      }
-      this.formGroup.get('name').updateValueAndValidity();
     });
   }
 
@@ -103,7 +96,13 @@ export class NewMessageComponent implements OnInit {
     return this.formGroup.get('categories') as FormControl;
   }
 
+  get description() {
+    return this.formGroup.get('description') as FormControl;
+  }
+
+
   onSubmit(post) {
     this.post = post;
+
   }
 }
