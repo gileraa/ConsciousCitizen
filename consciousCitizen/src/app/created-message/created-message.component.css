@@ -1,0 +1,40 @@
+:host {
+    --margin: 20px;
+    --color: #DFD9E8;
+    --border-radius: 5px;
+}
+
+.info {
+    flex: 30%;
+    width: 55%;
+}
+
+.mat-card {
+    padding: 0px;
+}
+
+.card-header {
+    background-color: var(--color);
+    padding: 0% 2% 0% 0;
+}
+
+.card-content, .button {
+    margin: var(--margin);
+    padding: 0;
+}
+
+.card-image {
+    width: 100%;
+}
+
+.map-container {
+    flex: 70%;
+}
+
+.map {
+    height: 90vh;
+}
+
+::ng-deep .event-select .mat-form-field-flex {
+    background-color: var(--color);
+}
