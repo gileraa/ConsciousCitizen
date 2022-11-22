@@ -1,0 +1,12 @@
+<h1 class="title">РУБРИКА</h1>
+
+<mat-form-field class="event-select" appearance="fill">
+  <mat-select [formControl]="eventType" disableRipple>
+    <mat-option
+      *ngFor="let option of eventTypes | keyvalue"
+      [value]="option.key"
+    >
+      {{ option.value }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

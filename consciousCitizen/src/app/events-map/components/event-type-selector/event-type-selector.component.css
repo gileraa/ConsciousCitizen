@@ -1,0 +1,14 @@
+.title {
+    margin: 20px;
+}
+
+.event-select {
+    border-radius: 5px;
+    margin: 20px;
+    width: 90%;
+    margin-bottom: 0px;
+}
+
+::ng-deep .event-select .mat-form-field-flex {
+    background-color: #DFD9E8;
+}

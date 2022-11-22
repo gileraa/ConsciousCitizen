@@ -22,6 +22,10 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { HttpClientModule } from '@angular/common/http';
+import { MatTabsModule } from '@angular/material/tabs';
+import { EventTypeSelectorComponent } from './events-map/components/event-type-selector/event-type-selector.component';
+import { EventCardComponent } from './events-map/components/event-card/event-card.component';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import {
   MatFormFieldModule,
@@ -50,6 +54,8 @@ const appRoutes: Routes = [
     ProfileComponent,
     HomeComponent,
     EventsMapComponent,
+    EventTypeSelectorComponent,
+    EventCardComponent,
     NewMessageComponent,
     CreatedMessageComponent,
   ],
@@ -67,6 +73,8 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatSnackBarModule,
     HttpClientModule,
+    MatTabsModule,
+    MatIconModule,
     MatInputModule,
     BrowserAnimationsModule,
     MatToolbarModule,
