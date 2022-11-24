@@ -80,6 +80,16 @@ public class EventService {
                 .collect(Collectors.toSet());
     }
 
+    public Event changeEventStatusById(Integer id) {
+        Event event = this.repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(String.format(FORMAT_ERROR_MESSAGE, id)));
+        boolean status = event.isStatus();
+
+        event.setStatus(!status);
+
+        return this.repository.save(event);
+    }
+
     protected void saveImages(Event event) throws FileNotFoundException {
         if (Strings.isNotBlank(event.getImage())) {
 
