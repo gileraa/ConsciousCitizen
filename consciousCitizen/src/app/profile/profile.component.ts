@@ -27,54 +27,59 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.authService.getUserById(1).subscribe();
-    this.user = this.userService.getUserData();
     this.personForm = new FormGroup({
       firstName: new FormControl(
-        { value: this.user?.firstName, disabled: !this.isEditingMode },
+        { value: null, disabled: !this.isEditingMode },
         Validators.required
       ),
       lastName: new FormControl(
-        { value: this.user?.lastName, disabled: !this.isEditingMode },
+        { value: null, disabled: !this.isEditingMode },
         Validators.required
       ),
       middleName: new FormControl(
-        { value: this.user?.middleName, disabled: !this.isEditingMode },
+        { value: null, disabled: !this.isEditingMode },
         Validators.required
       ),
       email: new FormControl(
-        { value: this.user?.email, disabled: !this.isEditingMode },
+        { value: null, disabled: !this.isEditingMode },
         Validators.required
       ),
-      phone: new FormControl(
-        { value: this.user?.phoneNumber, disabled: !this.isEditingMode },
+      phoneNumber: new FormControl(
+        { value: null, disabled: !this.isEditingMode },
         Validators.required
       ),
       city: new FormControl(
-        { value: this.user?.city, disabled: !this.isEditingMode },
+        { value: null, disabled: !this.isEditingMode },
         Validators.required
       ),
       street: new FormControl(
-        { value: this.user?.street, disabled: !this.isEditingMode },
+        { value: null, disabled: !this.isEditingMode },
         Validators.required
       ),
-      house: new FormControl(
-        { value: this.user?.building, disabled: !this.isEditingMode },
+      building: new FormControl(
+        { value: null, disabled: !this.isEditingMode },
         Validators.required
       ),
       apartment: new FormControl(
-        { value: this.user?.apartment, disabled: !this.isEditingMode },
+        { value: null, disabled: !this.isEditingMode },
         Validators.required
       ),
       login: new FormControl(
-        { value: this.user?.login, disabled: !this.isEditingMode },
+        { value: null, disabled: !this.isEditingMode },
         Validators.required
       ),
       password: new FormControl(
-        { value: this.user?.password, disabled: !this.isEditingMode },
+        { value: null, disabled: !this.isEditingMode },
         Validators.required
       ),
       newPassword: new FormControl({ value: '' }),
+    });
+    this.authService.getUserById(1).subscribe(() => {
+      this.user = this.userService.getUserData();
+      console.log('user 2: ', this.user);
+      if (this.user) {
+        this.personForm.patchValue(this.user);
+      }
     });
   }
 
@@ -91,7 +96,6 @@ export class ProfileComponent implements OnInit {
     this.userService.update(JSON.stringify(this.user)).subscribe(() => {
       this.authService.getUserById(1).subscribe();
     });
-    this.updateUserData();
     this.modeChanged();
   }
 

@@ -3,11 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { IActor } from '../events-map/interfaces/actor.interface';
-import { User } from '../profile/user';
-
-export const BASE_URL = 'http://localhost:8080';
-
-export const TOKEN = 'dXNlcjpmYTBkNjhjYi1lYzFkLTRkMTctODdmMy0wYTA1ZGM0MjgzNDg=';
+import { BASE_URL, TOKEN } from 'src/app/shared/consts';
 
 @Injectable({
   providedIn: 'root',
@@ -19,9 +15,6 @@ export class AuthService {
   private readonly url = `${BASE_URL}/actor`;
 
   constructor(private http: HttpClient) {}
-  // register(user: User): Observable<User> {
-  //   return this.http.post<User>('/api/customers/register', user);
-  // }
 
   getUserById(id: number): Observable<IActor> {
     const headers = new HttpHeaders();
