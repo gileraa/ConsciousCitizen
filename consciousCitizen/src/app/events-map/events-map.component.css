@@ -5,32 +5,9 @@
 }
 
 .info {
-    flex: 7%;
+    flex: 14%;
     background: #EDE7F6;
-}
-
-.card-title {
-    margin-top: 10px;
-}
-
-.card-address {
-    margin: 10px 10px 10px 16px;
-}
-
-.card-date {
-    margin: 0px 10px 10px 16px;
-    padding-bottom: 10px;
-}
-
-.title {
-    margin: var(--margin);
-}
-
-.event-select {
-    border-radius: var(--border-radius);
-    margin: var(--margin);
-    width: 90%;
-    margin-bottom: 0px;
+    min-width: 400px;
 }
 
 .button-container {
@@ -41,30 +18,14 @@
     left: 3%;
 }
 
-.mat-card {
-    padding: 0px;
-    margin: var(--margin);
-    margin-bottom: 0px;
-}
-
-.card-header {
-    background-color: var(--color);
-}
-
-.card-content {
-    margin: var(--margin);
-    max-height: 110px;
-    overflow: auto;
-}
-
 .button {
     margin: var(--margin);
     border: 1px solid #3F51B5;
     color: #3F51B5;
 }
 
-.card-image {
-    width: 100%;
+.button.action {
+    margin-left: 0px;
 }
 
 .map-container {
@@ -75,9 +36,33 @@
     height: 90vh;
 }
 
-::ng-deep .event-select .mat-form-field-flex {
-    background-color: var(--color);
+.choose-event {
+    margin: 20px;
 }
 
+.messanger-buttons {
+    display: flex;
+}
 
+.left-button, .right-button {
+    border-radius: 0px;
+    width: 50%;
+}
 
+.left-button.active {
+    background: #EDE7F6;
+}
+
+.right-button:not(.active) {
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+}
+
+.right-button.active {
+    background: #EDE7F6;
+}
+
+.left-button:not(.active) {
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+}

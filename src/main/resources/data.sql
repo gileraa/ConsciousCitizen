@@ -66,5 +66,5 @@ insert into event
 values (1, 2, 1, 2, false, 'Produkti', 'Tut v pyatoro4ke actsiya, vse suda!!!!', '10.10.2022',  true);
 
 insert into event
-(id, actor_id, rubric_id, address_id, status, theme, message_text, date, result)
-values (2, 3, 2, 3, true, 'Tema soobsheniya', 'Pojalui hvatit interneta na segodnya', '10.12.2022',  false);
+(id, actor_id, rubric_id, address_id, status, theme, message_text, date, result, image_name, image_name2)
+values (2, 3, 2, 3, true, 'Tema soobsheniya', 'Pojalui hvatit interneta na segodnya', '10.12.2022',  false, 'Event_2_1', 'Event_2_2');
