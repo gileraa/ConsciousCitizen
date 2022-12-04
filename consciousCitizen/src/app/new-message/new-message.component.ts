@@ -6,6 +6,13 @@ import {
   Validators,
 } from '@angular/forms';
 
+const NOMINATIM_BASE_URL = 'https://nominatim.openstreetmap.org/search?';
+const params = {
+  q: '',
+  format: 'json',
+  addressdetails: 'addressdetails',
+};
+
 @Component({
   selector: 'app-new-message',
   templateUrl: './new-message.component.html',
@@ -13,20 +20,11 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewMessageComponent implements OnInit {
-  // public readonly options: Record<EEventTypeOptions, string> = {
-  //   [EEventTypeOptions.All]: 'Все',
-  //   [EEventTypeOptions.Parking]: 'Парковки',
-  //   [EEventTypeOptions.OutdatedProduct]: 'Просроченные продукты',
-  // };
-  // public readonly options: Map<EEventTypeOptions, string> = new Map([
-  //   [EEventTypeOptions.All, 'Все'],
-  //   [EEventTypeOptions.Parking, 'Парковки'],
-  //   [EEventTypeOptions.OutdatedProduct, 'Просроченные продукты'],
-  // ]);
-  public options = ["Все", "Парковки", "Просроченные продукты"];
+  public options = ['Все', 'Парковки', 'Просроченные продукты'];
   formGroup: FormGroup;
   selectedFiles?: FileList;
   selectedFileNames: string[] = [];
+  coordinates: any = null;
 
   progressInfos: any[] = [];
   message: string[] = [];
@@ -38,7 +36,6 @@ export class NewMessageComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
-    console.log('new');
     this.createForm();
   }
 
@@ -67,6 +64,7 @@ export class NewMessageComponent implements OnInit {
   }
 
   createForm() {
+
     this.formGroup = this.formBuilder.group({
       name: ['', Validators.required],
       categories: [this.options, Validators.required],
@@ -89,8 +87,51 @@ export class NewMessageComponent implements OnInit {
     return this.formGroup.get('categories') as FormControl;
   }
 
-  onSubmit(post) {
-    this.post = post;
+  get description() {
+    return this.formGroup.get('description') as FormControl;
+  }
 
+  async getCoordinates() {
+    // options: Record<EEventTypeOptions, string> = {
+      //   [EEventTypeOptions.All]: 'Все',
+      //   [EEventTypeOptions.Parking]: 'Парковки',
+      //   [EEventTypeOptions.OutdatedProduct]: 'Просроченные продукты',
+      // };
+    const params: Record<string, string> = {
+      ['q']: this.address.value,
+      ['format']: "json",
+      ['addressdetails']: '1',
+      ['polygon_geojson']: '0',
+    };
+    const queryString = new URLSearchParams(params).toString();
+    const requestOptions = {
+      method: "GET",
+      redirect: "follow" as RequestRedirect,
+    };
+    fetch(`${NOMINATIM_BASE_URL}${queryString}`, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        console.log(JSON.parse(result));
+        this.coordinates = JSON.parse(result);
+      })
+      .catch((err) => console.log("err: ", err));
+  }
+
+  submit(isDraft: boolean) {
+    this.getCoordinates();
+    console.log("coord: ", this.coordinates); // ответ получаем правильный, координаты приходят
+    const event = {
+      lat: null,
+      lng: null,
+      description: this.description.value,
+      type: null,
+      name: this.name.value,
+      address: this.address.value,
+      date: (new Date()).toISOString(),
+      firstImageBase64: null,
+      secondImageBase64: null,
+      isDraft: isDraft,
+    };
+    this.formGroup.reset();
   }
 }

@@ -1,7 +1,6 @@
 <div class="container" novalidate>
     <form
     [formGroup]="formGroup"
-    (ngSubmit)="onSubmit(formGroup.value)"
     class="form"
   >
   <div class="form-container">
@@ -53,17 +52,31 @@
       </mat-form-field>
     </div>
 
-    <div class="form-button-element">
-      <button
-        mat-stroked-button
-        color="primary"
-        type="submit"
-        class="button"
-        [disabled]="!formGroup.valid"
-      >
-        Создать сообщение
-      </button>
+    <div class="form-buttons-container">
+      <div class="form-button-element">
+        <button
+          mat-stroked-button
+          color="primary"
+          (click)="submit(false)"
+          class="button"
+          [disabled]="!formGroup.valid"
+        >
+          Создать сообщение
+        </button>
+      </div>
+      <div class="form-button-element">
+        <button
+          mat-stroked-button
+          color="primary"
+          (click)="submit(true)"
+          class="button"
+          [disabled]="!formGroup.valid"
+        >
+          В черновики
+        </button>
+      </div>
     </div>
+    
   </div>
     
   </form>  
