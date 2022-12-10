@@ -1,84 +1,106 @@
 <div class="container" novalidate>
-    <form
-    [formGroup]="formGroup"
-    class="form"
-  >
-  <div class="form-container">
-    <div class="form-element-box">
-      <mat-form-field class="form-element">
-        <input matInput placeholder="Название инцидента" formControlName="name" />
-        <mat-error *ngIf="!name.valid && name.touched">
-          {{ titleAlert }}
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field class="form-element">
-        <mat-label>Рубрики</mat-label>
-        <mat-select [formControl]="categories" multiple>
-          <ng-container *ngFor="let option of options">
-            <mat-option [value]="option">{{ option }}</mat-option>
-          </ng-container>
-        </mat-select>
-      </mat-form-field>
-    </div>
-
-    <div class="form-element-box">
-      <mat-form-field class="form-element" >
-        <mat-label>Описание инцидента</mat-label>
-        <textarea matInput placeholder="Подробно опишите вашу проблему..."></textarea>
-      </mat-form-field>
-
+  <form [formGroup]="formGroup" class="form">
+    <div class="form-container">
+      <div class="form-element-box">
         <mat-form-field class="form-element">
-          <input matInput placeholder="Адрес" formControlName="address" />
-          <mat-error *ngIf="!address.valid && address.touched">
+          <input
+            matInput
+            placeholder="Название инцидента"
+            formControlName="name"
+          />
+          <mat-error *ngIf="!name.valid && name.touched">
             {{ titleAlert }}
           </mat-error>
         </mat-form-field>
-    </div>
 
-    <div class="form-element-box">
-      <mat-form-field class="form-element-image">
+        <mat-form-field class="form-element">
+          <mat-label>Рубрики</mat-label>
+          <mat-select [formControl]="categories">
+            <ng-container *ngFor="let option of options">
+              <mat-option [value]="option">{{ option }}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form-element-box">
+        <mat-form-field class="form-element">
+          <mat-label>Описание инцидента</mat-label>
+          <textarea
+            matInput
+            placeholder="Подробно опишите вашу проблему..."
+          ></textarea>
+        </mat-form-field>
+
+        <mat-form-field class="form-element">
+          <mat-label>Адрес</mat-label>
+          <input
+            type="text"
+            matInput
+            [formControl]="myControl"
+            [matAutocomplete]="auto"
+          />
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option
+              *ngFor="let option of filteredOptions | async"
+              [value]="option"
+              [matTooltip]="option.display_name"
+            >
+              {{ option.display_name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+
+      <div class="form-element-box">
+        <mat-form-field class="form-element-image">
           <mat-toolbar>
-            <input matInput [value]="selectedFileNames.length ? selectedFileNames : 'Нажмите для загрузки фотографий...'" disabled="true"/>
+            <input
+              matInput
+              [value]="
+                selectedFileNames.length
+                  ? selectedFileNames
+                  : 'Нажмите для загрузки фотографий...'
+              "
+              disabled="true"
+            />
           </mat-toolbar>
           <input
             type="file"
             formControlName="image"
             id="fileInput"
             name="fileInput"
-            accept="image/*" multiple 
+            accept="image/*"
+            multiple
             (change)="selectFiles($event)"
           />
-      </mat-form-field>
-    </div>
+        </mat-form-field>
+      </div>
 
-    <div class="form-buttons-container">
-      <div class="form-button-element">
-        <button
-          mat-stroked-button
-          color="primary"
-          (click)="submit(false)"
-          class="button"
-          [disabled]="!formGroup.valid"
-        >
-          Создать сообщение
-        </button>
-      </div>
-      <div class="form-button-element">
-        <button
-          mat-stroked-button
-          color="primary"
-          (click)="submit(true)"
-          class="button"
-          [disabled]="!formGroup.valid"
-        >
-          В черновики
-        </button>
+      <div class="form-buttons-container">
+        <div class="form-button-element">
+          <button
+            mat-stroked-button
+            color="primary"
+            (click)="submit(false)"
+            class="button"
+            [disabled]="!formGroup.valid"
+          >
+            Создать сообщение
+          </button>
+        </div>
+        <div class="form-button-element">
+          <button
+            mat-stroked-button
+            color="primary"
+            (click)="submit(true)"
+            class="button"
+            [disabled]="!formGroup.valid"
+          >
+            В черновики
+          </button>
+        </div>
       </div>
     </div>
-    
-  </div>
-    
-  </form>  
+  </form>
 </div>
-

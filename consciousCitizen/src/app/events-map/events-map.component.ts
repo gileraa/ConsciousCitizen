@@ -89,6 +89,12 @@ export class EventsMapComponent implements OnInit, OnDestroy {
       });
   }
 
+  public publish(): void {
+    this.eventApiService
+      .changeEventStatusById(this.selectedEvent.id)
+      .subscribe();
+  }
+
   public showMessages(): void {
     this.activeTab = 'messages';
 
@@ -142,8 +148,8 @@ export class EventsMapComponent implements OnInit, OnDestroy {
         .on('click', () => {
           const selectedEvent = this.currentEvents.find(
             (event) =>
-              event.lat === marker.getLatLng().lat &&
-              event.lng === marker.getLatLng().lng
+              parseFloat(event.lat.toString()) === marker.getLatLng().lat &&
+              parseFloat(event.lng.toString()) === marker.getLatLng().lng
           );
 
           this.selectedEvent = selectedEvent;

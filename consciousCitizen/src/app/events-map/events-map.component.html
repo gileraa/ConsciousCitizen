@@ -53,7 +53,7 @@
     </ng-container>
 
     <ng-container *ngIf="activeTab === 'drafts'">
-      <button class="button" mat-stroked-button color="primary">
+      <button class="button" mat-stroked-button color="primary" (click)="publish()">
         Опубликовать
       </button>
       <button class="button action" mat-stroked-button color="primary">
