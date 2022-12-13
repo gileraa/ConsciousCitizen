@@ -33,6 +33,8 @@ import {
 } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { CreatedMessageComponent } from './created-message/created-message.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -79,6 +81,8 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     MatToolbarModule,
     MatCardModule,
+    MatAutocompleteModule,
+    MatTooltipModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

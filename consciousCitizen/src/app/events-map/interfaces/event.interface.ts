@@ -13,6 +13,7 @@ export interface IEvent {
   firstImageBase64: string;
   secondImageBase64: string;
   isDraft: boolean;
+  id: string;
 }
 
 export interface IEventDto {
