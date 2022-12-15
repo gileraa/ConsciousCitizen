@@ -74,13 +74,32 @@ export class ProfileComponent implements OnInit {
       ),
       newPassword: new FormControl({ value: '' }),
     });
-    this.authService.getUserById(1).subscribe(() => {
-      this.user = this.userService.getUserData();
-      console.log('user 2: ', this.user);
-      if (this.user) {
-        this.personForm.patchValue(this.user);
-      }
-    });
+    this.user = JSON.parse(localStorage.getItem('user'));
+    if (this.user) {
+      this.personForm.patchValue(this.user);
+    } else {
+      this.user = {
+        firstName: 'Иван',
+        lastName: 'Иванов',
+        middleName: 'Иванович',
+        email: 'ivanov@ivan.com',
+        phoneNumber: '88088888888',
+        city: 'Иваново',
+        street: 'Ивановская',
+        building: '88',
+        apartment: '8',
+        login: 'vanjka',
+        password: '1111',
+        id: '1',
+        status: false,
+        newsletter: false,
+        role: {
+          id: 1,
+          name: 'user',
+        },
+      };
+      this.personForm.patchValue(this.user);
+    }
   }
 
   public modeChanged() {
@@ -93,9 +112,7 @@ export class ProfileComponent implements OnInit {
   }
 
   public submitForm() {
-    this.userService.update(JSON.stringify(this.user)).subscribe(() => {
-      this.authService.getUserById(1).subscribe();
-    });
+    this.updateUserData();
     this.modeChanged();
   }
 
@@ -107,8 +124,9 @@ export class ProfileComponent implements OnInit {
     }
     this.user.firstName = this.personForm.value['firstName'];
     this.user.lastName = this.personForm.value['lastName'];
+    this.user.middleName = this.personForm.value['middleName'];
     this.user.email = this.personForm.value['email'];
-    this.user.phoneNumber = this.personForm.value['phone'];
+    this.user.phoneNumber = this.personForm.value['phoneNumber'];
     this.user.city = this.personForm.value['city'];
     this.user.street = this.personForm.value['street'];
     this.user.building = this.personForm.value['building'];
@@ -116,5 +134,6 @@ export class ProfileComponent implements OnInit {
     this.user.login = this.personForm.value['login'];
     this.user.status = false;
     this.user.role = { id: 1, name: 'Ivan' };
+    localStorage.setItem('user', JSON.stringify(this.user));
   }
 }
