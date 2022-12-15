@@ -22,12 +22,22 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NewMessageComponent } from './new-message/new-message.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { HttpClientModule } from '@angular/common/http';
+import { MatTabsModule } from '@angular/material/tabs';
+import { EventTypeSelectorComponent } from './events-map/components/event-type-selector/event-type-selector.component';
+import { EventCardComponent } from './events-map/components/event-card/event-card.component';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 import {
   MatFormFieldModule,
   MAT_FORM_FIELD_DEFAULT_OPTIONS,
 } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 import { CreatedMessageComponent } from './created-message/created-message.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -49,6 +59,8 @@ const appRoutes: Routes = [
     ProfileComponent,
     HomeComponent,
     EventsMapComponent,
+    EventTypeSelectorComponent,
+    EventCardComponent,
     NewMessageComponent,
     CreatedMessageComponent,
   ],
@@ -66,10 +78,14 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatSnackBarModule,
     HttpClientModule,
+    MatTabsModule,
+    MatIconModule,
     MatInputModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatCardModule,
+    MatAutocompleteModule,
+    MatTooltipModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

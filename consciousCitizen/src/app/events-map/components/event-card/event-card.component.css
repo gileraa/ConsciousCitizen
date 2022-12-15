@@ -1,0 +1,33 @@
+.card-title {
+    margin-top: 10px;
+}
+
+.card-address {
+    margin: 10px 10px 10px 16px;
+}
+
+.card-date {
+    margin: 0px 10px 10px 16px;
+    padding-bottom: 10px;
+}
+
+.mat-card {
+    padding: 0px;
+    margin: 20px;
+    margin-bottom: 0px;
+}
+
+.card-header {
+    background-color: #DFD9E8;
+}
+
+.card-content {
+    margin: 20px;
+    max-height: 110px;
+    overflow: auto;
+}
+
+.card-image {
+    width: 50%;
+    max-height: 300px;
+}

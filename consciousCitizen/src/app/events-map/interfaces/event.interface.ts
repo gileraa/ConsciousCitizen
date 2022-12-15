@@ -10,7 +10,10 @@ export interface IEvent {
   name: string;
   address: string;
   date: string;
-  imageBase64: string;
+  firstImageBase64: string;
+  secondImageBase64: string;
+  isDraft: boolean;
+  id: string;
 }
 
 export interface IEventDto {
@@ -24,4 +27,5 @@ export interface IEventDto {
   date: string;
   result: boolean;
   image: string;
+  image2: string;
 }
