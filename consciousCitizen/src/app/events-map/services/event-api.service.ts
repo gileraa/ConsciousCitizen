@@ -11,6 +11,15 @@ export class EventApiService {
 
   constructor(private readonly http: HttpClient) {}
 
+  public changeEventStatusById(id: string): Observable<void> {
+    const headers = new HttpHeaders();
+    headers.set('Authorization', `Basic ${TOKEN}`);
+
+    return this.http.get<void>(`${BASE_URL}/changeEventStatusById/${id}`, {
+      headers: headers,
+    });
+  }
+
   public getAllEvents(): Observable<IEvent[]> {
     const headers = new HttpHeaders();
     headers.set('Authorization', `Basic ${TOKEN}`);
@@ -24,6 +33,10 @@ export class EventApiService {
         const events: IEvent[] = eventsDto.map((eventDto) =>
           this.parseEvent(eventDto)
         );
+
+        const e = JSON.parse(localStorage.getItem('events')) as IEvent[];
+
+        events.push(...e);
 
         return events;
       })
@@ -44,12 +57,14 @@ export class EventApiService {
       firstImageBase64: eventDto.image,
       secondImageBase64: eventDto.image2,
       isDraft: eventDto.status,
+      id: eventDto.id.toString(),
     };
   }
 }
 
 const stubEvents: IEvent[] = [
   {
+    id: '1',
     lat: 23,
     lng: 23,
     description: 'description',
@@ -64,6 +79,7 @@ const stubEvents: IEvent[] = [
     isDraft: false,
   },
   {
+    id: '2',
     lat: 30,
     lng: 23,
     description: 'description',
@@ -78,6 +94,7 @@ const stubEvents: IEvent[] = [
     isDraft: false,
   },
   {
+    id: '3',
     lat: 40,
     lng: 23,
     description: 'description',

@@ -5,6 +5,11 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
+import { from, Observable } from 'rxjs';
+import { map, startWith, switchMap } from 'rxjs/operators';
+import { EEventTypeOptions } from '../events-map/enums/event-type-options.enum';
+import { IEvent } from '../events-map/interfaces/event.interface';
 
 const NOMINATIM_BASE_URL = 'https://nominatim.openstreetmap.org/search?';
 const params = {
@@ -26,6 +31,12 @@ export class NewMessageComponent implements OnInit {
   selectedFileNames: string[] = [];
   coordinates: any = null;
 
+  map = {
+    Все: [EEventTypeOptions.All],
+    Парковки: [EEventTypeOptions.Parking],
+    'Просроченные продукты': [EEventTypeOptions.OutdatedProduct],
+  };
+
   progressInfos: any[] = [];
   message: string[] = [];
 
@@ -33,10 +44,21 @@ export class NewMessageComponent implements OnInit {
   titleAlert: string = 'Это обязательное поле!';
   post: any = '';
 
-  constructor(private formBuilder: FormBuilder) {}
+  filteredOptions: Observable<any[]>;
+  myControl = new FormControl('');
+
+  constructor(private formBuilder: FormBuilder, private router: Router) {}
 
   ngOnInit() {
     this.createForm();
+
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      switchMap((value) => {
+        return from(this.getCoordinates(value));
+      }),
+      map((x) => this.coordinates)
+    );
   }
 
   selectFiles(event: any): void {
@@ -63,13 +85,15 @@ export class NewMessageComponent implements OnInit {
     }
   }
 
-  createForm() {
+  displayFn(value: any): string {
+    return value && value.display_name;
+  }
 
+  createForm() {
     this.formGroup = this.formBuilder.group({
       name: ['', Validators.required],
       categories: [this.options, Validators.required],
       description: [''],
-      address: ['', Validators.required],
       image: [null],
       validate: '',
     });
@@ -91,47 +115,88 @@ export class NewMessageComponent implements OnInit {
     return this.formGroup.get('description') as FormControl;
   }
 
-  async getCoordinates() {
+  async getCoordinates(value: string) {
     // options: Record<EEventTypeOptions, string> = {
-      //   [EEventTypeOptions.All]: 'Все',
-      //   [EEventTypeOptions.Parking]: 'Парковки',
-      //   [EEventTypeOptions.OutdatedProduct]: 'Просроченные продукты',
-      // };
+    //   [EEventTypeOptions.All]: 'Все',
+    //   [EEventTypeOptions.Parking]: 'Парковки',
+    //   [EEventTypeOptions.OutdatedProduct]: 'Просроченные продукты',
+    // };
     const params: Record<string, string> = {
-      ['q']: this.address.value,
-      ['format']: "json",
+      ['q']: value,
+      ['format']: 'json',
       ['addressdetails']: '1',
       ['polygon_geojson']: '0',
     };
     const queryString = new URLSearchParams(params).toString();
     const requestOptions = {
-      method: "GET",
-      redirect: "follow" as RequestRedirect,
+      method: 'GET',
+      redirect: 'follow' as RequestRedirect,
     };
-    fetch(`${NOMINATIM_BASE_URL}${queryString}`, requestOptions)
+    return fetch(`${NOMINATIM_BASE_URL}${queryString}`, requestOptions)
       .then((response) => response.text())
       .then((result) => {
         console.log(JSON.parse(result));
         this.coordinates = JSON.parse(result);
       })
-      .catch((err) => console.log("err: ", err));
+      .catch((err) => console.log('err: ', err));
   }
 
   submit(isDraft: boolean) {
-    this.getCoordinates();
-    console.log("coord: ", this.coordinates); // ответ получаем правильный, координаты приходят
-    const event = {
-      lat: null,
-      lng: null,
+    console.info(this.myControl.value);
+    console.log('coord: ', this.coordinates); // ответ получаем правильный, координаты приходят
+
+    const events = localStorage.getItem('events');
+    if (!events) {
+      localStorage.setItem('events', JSON.stringify([]));
+    }
+
+    const e = JSON.parse(localStorage.getItem('events')) as IEvent[];
+
+    e.push({
+      lat: this.myControl.value.lat,
+      lng: this.myControl.value.lon,
       description: this.description.value,
-      type: null,
+      type: this.map[this.formGroup.controls.categories.value][0],
       name: this.name.value,
-      address: this.address.value,
-      date: (new Date()).toISOString(),
-      firstImageBase64: null,
-      secondImageBase64: null,
+      address: this.myControl.value.display_name,
+      date: new Date().toDateString(),
+      firstImageBase64: this.previews[0],
+      secondImageBase64: this.previews[0],
       isDraft: isDraft,
-    };
+      id: this.guid(),
+    });
+
+    localStorage.setItem('events', JSON.stringify(e));
+
     this.formGroup.reset();
+
+    if (isDraft) {
+      this.router.navigate(['/messanger']);
+    } else {
+      this.router.navigate(['/']);
+    }
+  }
+
+  guid() {
+    let s4 = () => {
+      return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+    };
+
+    return (
+      s4() +
+      s4() +
+      '-' +
+      s4() +
+      '-' +
+      s4() +
+      '-' +
+      s4() +
+      '-' +
+      s4() +
+      s4() +
+      s4()
+    );
   }
 }

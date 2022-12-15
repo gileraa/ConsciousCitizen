@@ -5,6 +5,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
+import { User } from './user';
 
 @Component({
   selector: 'app-profile',
@@ -13,73 +16,90 @@ import {
 })
 export class ProfileComponent implements OnInit {
   public isEditingMode = false;
-  private defaultPerson = {
-    firstName: 'Михаил',
-    lastName: 'Грушенков',
-    middleName: 'Андреевич',
-    email: 'grushenkov.m@gmail.com',
-    phone: '+79027426436',
-    city: 'Самара',
-    street: 'Московское шоссе',
-    house: '34Б',
-    apartment: '304',
-    login: '',
-    password: '',
-    newPassword: '',
-  };
+  user: User;
 
-  public personForm = new FormGroup({
-    firstName: new FormControl(
-      { value: '', disabled: !this.isEditingMode },
-      Validators.required
-    ),
-    lastName: new FormControl(
-      { value: '', disabled: !this.isEditingMode },
-      Validators.required
-    ),
-    middleName: new FormControl(
-      { value: '', disabled: !this.isEditingMode },
-      Validators.required
-    ),
-    email: new FormControl(
-      { value: '', disabled: !this.isEditingMode },
-      Validators.required
-    ),
-    phone: new FormControl(
-      { value: '', disabled: !this.isEditingMode },
-      Validators.required
-    ),
-    city: new FormControl(
-      { value: '', disabled: !this.isEditingMode },
-      Validators.required
-    ),
-    street: new FormControl(
-      { value: '', disabled: !this.isEditingMode },
-      Validators.required
-    ),
-    house: new FormControl(
-      { value: '', disabled: !this.isEditingMode },
-      Validators.required
-    ),
-    apartment: new FormControl(
-      { value: '', disabled: !this.isEditingMode },
-      Validators.required
-    ),
-    login: new FormControl(
-      { value: '', disabled: !this.isEditingMode },
-      Validators.required
-    ),
-    password: new FormControl(
-      { value: '', disabled: !this.isEditingMode },
-      Validators.required
-    ),
-    newPassword: new FormControl({ value: '' }, Validators.required),
-  });
+  public personForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
-    this.personForm.patchValue(this.defaultPerson);
+    this.personForm = new FormGroup({
+      firstName: new FormControl(
+        { value: null, disabled: !this.isEditingMode },
+        Validators.required
+      ),
+      lastName: new FormControl(
+        { value: null, disabled: !this.isEditingMode },
+        Validators.required
+      ),
+      middleName: new FormControl(
+        { value: null, disabled: !this.isEditingMode },
+        Validators.required
+      ),
+      email: new FormControl(
+        { value: null, disabled: !this.isEditingMode },
+        Validators.required
+      ),
+      phoneNumber: new FormControl(
+        { value: null, disabled: !this.isEditingMode },
+        Validators.required
+      ),
+      city: new FormControl(
+        { value: null, disabled: !this.isEditingMode },
+        Validators.required
+      ),
+      street: new FormControl(
+        { value: null, disabled: !this.isEditingMode },
+        Validators.required
+      ),
+      building: new FormControl(
+        { value: null, disabled: !this.isEditingMode },
+        Validators.required
+      ),
+      apartment: new FormControl(
+        { value: null, disabled: !this.isEditingMode },
+        Validators.required
+      ),
+      login: new FormControl(
+        { value: null, disabled: !this.isEditingMode },
+        Validators.required
+      ),
+      password: new FormControl(
+        { value: null, disabled: !this.isEditingMode },
+        Validators.required
+      ),
+      newPassword: new FormControl({ value: '' }),
+    });
+    this.user = JSON.parse(localStorage.getItem('user'));
+    if (this.user) {
+      this.personForm.patchValue(this.user);
+    } else {
+      this.user = {
+        firstName: 'Иван',
+        lastName: 'Иванов',
+        middleName: 'Иванович',
+        email: 'ivanov@ivan.com',
+        phoneNumber: '88088888888',
+        city: 'Иваново',
+        street: 'Ивановская',
+        building: '88',
+        apartment: '8',
+        login: 'vanjka',
+        password: '1111',
+        id: '1',
+        status: false,
+        newsletter: false,
+        role: {
+          id: 1,
+          name: 'user',
+        },
+      };
+      this.personForm.patchValue(this.user);
+    }
   }
 
   public modeChanged() {
@@ -92,74 +112,28 @@ export class ProfileComponent implements OnInit {
   }
 
   public submitForm() {
-    // Process checkout data here
-    // console.warn('Your order has been submitted', this.personForm.value);
-    this.personForm.reset();
+    this.updateUserData();
     this.modeChanged();
   }
 
-  //   public get firstName() {
-  //     return this.firstNameInternal;
-  //   }
-
-  //   public set firstName(value: string) {
-  //     this.firstNameInternal = value;
-  //   }
-
-  //   public get lastName() {
-  //     return this.lastNameInternal;
-  //   }
-
-  //   public set lastName(value: string) {
-  //     this.lastNameInternal = value;
-  //   }
-  //   public get middleName() {
-  //     return this.middleNameInternal;
-  //   }
-
-  //   public set middleName(value: string) {
-  //     this.middleNameInternal = value;
-  //   }
-  //   public get email() {
-  //     return this.emailInternal;
-  //   }
-
-  //   public set email(value: string) {
-  //     this.emailInternal = value;
-  //   }
-  //   public get phone() {
-  //     return this.phoneInternal;
-  //   }
-
-  //   public set phone(value: string) {
-  //     this.phoneInternal = value;
-  //   }
-  //   public get city() {
-  //     return this.cityInternal;
-  //   }
-
-  //   public set city(value: string) {
-  //     this.cityInternal = value;
-  //   }
-  //   public get street() {
-  //     return this.streetInternal;
-  //   }
-
-  //   public set street(value: string) {
-  //     this.streetInternal = value;
-  //   }
-  //   public get house() {
-  //     return this.houseInternal;
-  //   }
-
-  //   public set house(value: string) {
-  //     this.houseInternal = value;
-  //   }
-  //   public get apartment() {
-  //     return this.apartmentInternal;
-  //   }
-
-  //   public set apartment(value: string) {
-  //     this.apartmentInternal = value;
-  //   }
+  updateUserData() {
+    if (this.personForm.value['newPassword'] != null) {
+      this.user.password = this.personForm.value['newPassword'];
+    } else {
+      this.user.password = this.personForm.value['password'];
+    }
+    this.user.firstName = this.personForm.value['firstName'];
+    this.user.lastName = this.personForm.value['lastName'];
+    this.user.middleName = this.personForm.value['middleName'];
+    this.user.email = this.personForm.value['email'];
+    this.user.phoneNumber = this.personForm.value['phoneNumber'];
+    this.user.city = this.personForm.value['city'];
+    this.user.street = this.personForm.value['street'];
+    this.user.building = this.personForm.value['building'];
+    this.user.apartment = this.personForm.value['apartment'];
+    this.user.login = this.personForm.value['login'];
+    this.user.status = false;
+    this.user.role = { id: 1, name: 'Ivan' };
+    localStorage.setItem('user', JSON.stringify(this.user));
+  }
 }
