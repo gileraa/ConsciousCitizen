@@ -41,7 +41,7 @@ export class NewMessageComponent implements OnInit {
   message: string[] = [];
 
   previews: string[] = [];
-  titleAlert: string = 'This field is required';
+  titleAlert: string = 'Это обязательное поле!';
   post: any = '';
 
   filteredOptions: Observable<any[]>;
