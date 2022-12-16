@@ -15,7 +15,7 @@ export class EventApiService {
     const headers = new HttpHeaders();
     headers.set('Authorization', `Basic ${TOKEN}`);
 
-    return this.http.get<void>(`${BASE_URL}/changeEventStatusById/${id}`, {
+    return this.http.post<void>(`${BASE_URL}/changeEventStatusById/${id}`, {
       headers: headers,
     });
   }
@@ -36,7 +36,9 @@ export class EventApiService {
 
         const e = JSON.parse(localStorage.getItem('events')) as IEvent[];
 
-        events.push(...e);
+        if (e) {
+          events.push(...e);
+        }
 
         return events;
       })
