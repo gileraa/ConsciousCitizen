@@ -44,7 +44,7 @@
 
   <div *ngIf="isMessangerMode && selectedEvent" class="button-container">
     <ng-container *ngIf="activeTab === 'messages'">
-      <button class="button" mat-stroked-button color="primary">
+      <button class="button" mat-stroked-button color="primary" (click)="toDraft()">
         Архивировать
       </button>
       <button class="button action" mat-stroked-button color="primary">

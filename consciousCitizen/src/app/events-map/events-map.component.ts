@@ -89,7 +89,31 @@ export class EventsMapComponent implements OnInit, OnDestroy {
       });
   }
 
+  public toDraft(): void {
+    const events = JSON.parse(localStorage.getItem('events')) as IEvent[];
+
+    const event = events.find((event) => event.id === this.selectedEvent.id);
+
+    if (event) {
+      event.isDraft = true;
+      localStorage.setItem('events', JSON.stringify(events));
+
+      this.showDrafts();
+    }
+  }
+
   public publish(): void {
+    const events = JSON.parse(localStorage.getItem('events')) as IEvent[];
+
+    const event = events.find((event) => event.id === this.selectedEvent.id);
+
+    if (event) {
+      event.isDraft = false;
+      localStorage.setItem('events', JSON.stringify(events));
+
+      this.showMessages();
+    }
+
     this.eventApiService
       .changeEventStatusById(this.selectedEvent.id)
       .subscribe();
@@ -98,17 +122,13 @@ export class EventsMapComponent implements OnInit, OnDestroy {
   public showMessages(): void {
     this.activeTab = 'messages';
 
-    this.selectedEvent = undefined;
-    this.removeMarkers();
-    this.initMarkers(this.currentEvents);
+    this.doMagic();
   }
 
   public showDrafts(): void {
     this.activeTab = 'drafts';
 
-    this.selectedEvent = undefined;
-    this.removeMarkers();
-    this.initMarkers(this.currentEvents);
+    this.doMagic();
   }
 
   public changeEventType(value: EEventTypeOptions): void {
@@ -138,6 +158,32 @@ export class EventsMapComponent implements OnInit, OnDestroy {
           '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       })
       .addTo(this.map);
+  }
+
+  private doMagic(): void {
+    this.draftEvents.splice(0);
+    this.events.splice(0);
+
+    this.eventApiService
+      .getAllEvents()
+      .pipe(takeUntil(this.destroyer$))
+      .subscribe((events) => {
+        if (!events) {
+          return;
+        }
+
+        events.forEach((event) => {
+          if (event.isDraft) {
+            this.draftEvents.push(event);
+          } else {
+            this.events.push(event);
+          }
+        });
+
+        this.selectedEvent = undefined;
+        this.removeMarkers();
+        this.initMarkers(this.currentEvents);
+      });
   }
 
   private initMarkers(events: IEvent[]): void {
